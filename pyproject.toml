@@ -1,0 +1,21 @@
+[project]
+name = "annotation_metrics"
+version = "0.1.0"
+description = "fetch stimulus response metrics for Tissuecyte alignment from Code Ocean spike sorted output"
+authors = [
+    {name = "arjun.sridhar12345", email = "arjun.sridhar@alleninstitute.org"},
+]
+dependencies = [
+    "npc-sessions>=0.0.254",
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.pdm]
+distribution = true
