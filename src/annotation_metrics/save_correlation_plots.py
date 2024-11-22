@@ -92,7 +92,7 @@ def save_metrics_for_correlation(session: npc_session.SessionRecord, probe: npc_
         spike_depths = clusters_depths[spike_clusters]
         save_for_annotation(session, spike_times_aligned, spike_depths, peak_channels, probe, tag)
 
-def save_refinement_metrics(subject_id: str, session: npc_session.SessionRecord, session_surface: npc_session.SessionRecord | None=None) -> None:
+def save_correlation_plot_metrics(subject_id: str, session: npc_session.SessionRecord, session_surface: npc_session.SessionRecord | None=None) -> None:
     spike_interface_data = npc_ephys.SpikeInterfaceKS25Data(session)
     probes = spike_interface_data.probes
 
@@ -155,14 +155,14 @@ def save_refinement_metrics(subject_id: str, session: npc_session.SessionRecord,
             pass
         
 
-def get_annotation_data_for_mouse(mouse_id:str) -> None:
+def save_correlation_plots(mouse_id:str) -> None:
     sessions = npc_lims.get_sessions_with_data_assets(mouse_id)
     for session in sessions:
         session_surface = None
         try:
             if npc_lims.get_session_info(session).is_surface_channels:
                 session_surface = npc_session.SessionRecord(session).with_idx(1)
-            save_refinement_metrics(mouse_id, session, session_surface=session_surface)
+            save_correlation_plot_metrics(mouse_id, session, session_surface=session_surface)
         except (IndexError, ValueError, FileNotFoundError, npc_lims.exceptions.NoSessionInfo) as e:
             print(e)
             print(f'Failed to get metrics for session" {session}')
@@ -170,11 +170,6 @@ def get_annotation_data_for_mouse(mouse_id:str) -> None:
     
     
 if __name__ == '__main__':
-    #args = parser.parse_args()
-    #mouse_id = args.mouseID
-    #mouse_id = ['620263', '620264', '626791', '628801', '636397', '644547', '646318', '636766', '644864', '644866', '649943',
-               #'644867', '649944', '662983', '668759', '670181', '670180', '670248', '660023', '666986', '668755', '667252',
-                #'674562', '681532', '686740', '664851', '690706', '686176', '676909']
-    mouse_id = ['741137']
-    for mid in mouse_id:
-        get_annotation_data_for_mouse(mid)
+    args = parser.parse_args()
+    mouse_id = args.mouseID
+    save_correlation_plots(mouse_id)

@@ -8,6 +8,10 @@ import spike_utils
 from npc_sessions import DynamicRoutingSession
 import os
 import pickle
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--sessionID', help='Session ID - mouse id and date')
 
 #calculate metrics for channel alignment
 
@@ -437,5 +441,6 @@ def save_stim_metrics_for_alignment(session_id: str):
         pickle.dump(except_dict, f)
 
 if __name__ == '__main__':
-    session_id = '741137_2024-10-09'
+    args = parser.parse_args()
+    session_id = args.sessionID
     save_stim_metrics_for_alignment(session_id)
