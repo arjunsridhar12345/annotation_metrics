@@ -100,7 +100,7 @@ def save_correlation_plot_metrics(subject_id: str, session: npc_session.SessionR
     #epochs = session_experiment.epochs[:]
 
     for probe in probes:
-        print(f'Processing Probe {probe}')
+        print(f'Session {session} and probe {probe}')
         try:
             peak_channels = list(npc_ephys.get_amplitudes_waveforms_channels_ks25(spike_interface_data, electrode_group_name=probe).peak_channels)
             spike_times = spike_interface_data.spike_indexes(probe)
