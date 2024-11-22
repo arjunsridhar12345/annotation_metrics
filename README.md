@@ -19,12 +19,12 @@ Then `cd src/annotation_metrics`.
 Run the command with the mouse id to save the correlation plots that the alignment app will use to the isilon.
 
 ```
-python save_correlation_plots.py --mouseID mouseID
+python save_correlation_plots.py --mouseID 741137
 ```
 
 # Saving Ethan's stim response metrics
 Run the command to with the <strong>session id</strong> to save stim response metrics that the alignment app will use to the isilon.
 
 ```
-python save_stim_metrics_for_alignment.py --mouseID mouseID
+python save_stim_metrics_for_alignment.py --sessionID 741137_2024-10-10
 ```
