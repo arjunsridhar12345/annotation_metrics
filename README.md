@@ -5,7 +5,7 @@ First, create a new environment with a python version >= 3.9.
 After doing this, clone the repo:
 
 ```
-(https://github.com/arjunsridhar12345/annotation_metrics.git)
+git clone https://github.com/arjunsridhar12345/annotation_metrics.git
 ```
 
 And then `cd` to the directory where the repo was cloned and install the package and its dependencies
