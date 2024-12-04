@@ -149,7 +149,8 @@ def save_correlation_plot_metrics(subject_id: str, session: npc_session.SessionR
             """
             save_metrics_for_correlation(session, probe, spike_times_aligned, spike_clusters, spike_interface_data, channel_positions,
                                                 peak_channels)
-            get_correlation_data(subject_id, tag='full')
+            get_correlation_data(subject_id, npc_lims.get_session_info(session).experiment_day,
+                                 probe, tag='full')
         except (ValueError, Exception, IndexError) as e:
             print(e)
             print(f'Failed to get metrics for session {session} and probe {probe}')
