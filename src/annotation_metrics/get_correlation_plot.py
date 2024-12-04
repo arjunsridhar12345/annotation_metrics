@@ -123,24 +123,28 @@ class qcChecker():
         except:
             pass
 
-def get_correlation_data(mouse_id:str, tag:str, is_codeocean:bool=False):
+def get_correlation_data(mouse_id:str, experiment_day: int, probe_letter: str,
+                         tag:str, is_codeocean:bool=False):
     metrics_paths = generate_metrics_path_days_codeocean(BASE_PATH, mouse_id)
     probe_letters = ['A', 'B', 'C', 'D', 'E', 'F']
 
-    for day in metrics_paths:
-        metric_paths_day = metrics_paths[day]
+    metric_paths_day = metrics_paths[experiment_day]
 
-        for metric_path in metric_paths_day:
-            peak_channels = pd.read_csv(metric_path)['peak_channel']
-            kilo_sort_path = pathlib.Path(metric_path).parent
-            letter = [probe_letter for probe_letter in probe_letters if 'probe{}'.format(probe_letter) in str(kilo_sort_path)][0]
-            probe = letter + str(day)
-            
-            if (kilo_sort_path / f'spike_depths_{tag}.npy').exists():
-                if peak_channels.max() > 383:
-                    qcChecker(kilo_sort_path, mouse_id, probe, tag, scale=768, channel_max=7680).get_correlation_data_img()
-                else:
-                    qcChecker(kilo_sort_path, mouse_id, probe, tag).get_correlation_data_img()
+    for metric_path in metric_paths_day:
+        peak_channels = pd.read_csv(metric_path)['peak_channel']
+        kilo_sort_path = pathlib.Path(metric_path).parent
+        letter = [probe_letter for probe_letter in probe_letters if 'probe{}'.format(probe_letter) in str(kilo_sort_path)][0]
+        probe = letter + str(experiment_day)
+        
+        if letter != probe_letter:
+            continue
+
+        print(f'Saving correlation plot for probe {probe}')
+        if (kilo_sort_path / f'spike_depths_{tag}.npy').exists():
+            if peak_channels.max() > 383:
+                qcChecker(kilo_sort_path, mouse_id, probe, tag, scale=768, channel_max=7680).get_correlation_data_img()
+            else:
+                qcChecker(kilo_sort_path, mouse_id, probe, tag).get_correlation_data_img()
 
 if __name__ == '__main__':
     args = parser.parse_args()
